@@ -22,15 +22,17 @@ export function Workshops() {
             {workshops.items.map((item, i) => (
               <RevealItem
                 key={item.name}
-                className="flex items-start gap-4 rounded-2xl bg-ivory p-4 shadow-card sm:items-center"
+                className="flex items-start gap-4 rounded-2xl bg-ivory p-4 shadow-card"
               >
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sage/20 font-serif-display text-sm text-sage-deep">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="font-serif-display text-lg leading-snug text-ink">{item.name}</span>
-                <span className="ml-auto shrink-0 whitespace-nowrap pl-3 font-sans-ui text-xs uppercase tracking-[0.15em] text-stone-dark">
-                  {item.detail}
-                </span>
+                <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
+                  <span className="font-serif-display text-lg leading-snug text-ink">{item.name}</span>
+                  <span className="shrink-0 font-sans-ui text-xs uppercase tracking-[0.15em] text-stone-dark sm:text-right">
+                    {item.detail}
+                  </span>
+                </div>
               </RevealItem>
             ))}
           </RevealGroup>

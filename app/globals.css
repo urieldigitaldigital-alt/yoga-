@@ -35,12 +35,15 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-ivory text-ink antialiased;
     font-family: var(--font-sans);
     font-weight: 300;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   ::selection {

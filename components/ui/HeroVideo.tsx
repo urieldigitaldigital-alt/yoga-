@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 
 type HeroVideoProps = {
@@ -17,6 +17,7 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
     mounted: false,
     isMobile: false,
   });
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_QUERY);
@@ -28,6 +29,35 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
 
   const { mounted, isMobile } = viewport;
   const activeSrc = isMobile && mobileSrc ? mobileSrc : src;
+
+  // iOS Safari a veces pausa el video de fondo (al volver de otra app, al
+  // recuperar memoria, etc). Lo retomamos apenas la página vuelve a estar visible.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !activeSrc) return;
+
+    video.muted = true;
+
+    const tryPlay = () => {
+      video.play().catch(() => {});
+    };
+    const onVisibility = () => {
+      if (!document.hidden) tryPlay();
+    };
+
+    tryPlay();
+    video.addEventListener("pause", tryPlay);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pageshow", tryPlay);
+    window.addEventListener("focus", tryPlay);
+
+    return () => {
+      video.removeEventListener("pause", tryPlay);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pageshow", tryPlay);
+      window.removeEventListener("focus", tryPlay);
+    };
+  }, [activeSrc]);
 
   if (!mounted || !activeSrc) {
     return (
@@ -46,6 +76,7 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-espresso">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src={activeSrc}
         poster={poster || undefined}
@@ -53,6 +84,9 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
         muted
         loop
         playsInline
+        webkit-playsinline="true"
+        disableRemotePlayback
+        preload="auto"
       >
         <track kind="captions" />
       </video>
