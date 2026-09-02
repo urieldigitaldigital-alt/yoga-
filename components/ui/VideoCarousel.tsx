@@ -13,15 +13,24 @@ const SPEED = 0.65; // 1 = scroll 1:1 with horizontal distance; lower = finishes
 
 function VideoCard({ item, index }: { item: CarouselItem; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const tryPlay = () => {
+      if (isVisibleRef.current) video.play().catch(() => {});
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          tryPlay();
         } else {
           video.pause();
         }
@@ -29,7 +38,19 @@ function VideoCard({ item, index }: { item: CarouselItem; index: number }) {
       { threshold: 0.6 },
     );
     observer.observe(video);
-    return () => observer.disconnect();
+
+    const events = ["loadedmetadata", "loadeddata", "canplay", "pause"];
+    events.forEach((evt) => video.addEventListener(evt, tryPlay));
+    const onVisibility = () => {
+      if (!document.hidden) tryPlay();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      observer.disconnect();
+      events.forEach((evt) => video.removeEventListener(evt, tryPlay));
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
   return (
@@ -42,6 +63,9 @@ function VideoCard({ item, index }: { item: CarouselItem; index: number }) {
           muted
           loop
           playsInline
+          webkit-playsinline="true"
+          disablePictureInPicture
+          disableRemotePlayback
           preload="metadata"
         />
       ) : (

@@ -29,14 +29,17 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
     return () => mq.removeEventListener("change", update);
   }, [src, mobileSrc]);
 
-  // Algunos navegadores (sobre todo iOS Safari) pueden pausar el video de
-  // fondo al volver de otra app o por presión de memoria. Lo retomamos apenas
-  // la página vuelve a estar visible, sin que el usuario tenga que tocar nada.
+  // Forzamos la reproducción por script en vez de confiar solo en el atributo
+  // "autoplay": algunos navegadores (Safari/iOS con "Reducir movimiento"
+  // activado, o al recuperar memoria) ignoran el autoplay declarativo pero sí
+  // respetan un play() disparado por código. Reintentamos en varios eventos y
+  // con un chequeo periódico corto como red de seguridad.
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !activeSrc) return;
 
     video.muted = true;
+    video.defaultMuted = true;
 
     const tryPlay = () => {
       video.play().catch(() => {});
@@ -46,18 +49,28 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
     };
 
     tryPlay();
-    video.addEventListener("pause", tryPlay);
-    video.addEventListener("loadedmetadata", tryPlay);
+
+    const events = ["loadedmetadata", "loadeddata", "canplay", "canplaythrough", "pause"];
+    events.forEach((evt) => video.addEventListener(evt, tryPlay));
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pageshow", tryPlay);
     window.addEventListener("focus", tryPlay);
 
+    // Red de seguridad: si por lo que sea sigue pausado, insistimos unos
+    // segundos más sin quedar reintentando para siempre.
+    let attempts = 0;
+    const interval = window.setInterval(() => {
+      attempts += 1;
+      if (video.paused && !document.hidden) tryPlay();
+      if (!video.paused || attempts > 10) window.clearInterval(interval);
+    }, 500);
+
     return () => {
-      video.removeEventListener("pause", tryPlay);
-      video.removeEventListener("loadedmetadata", tryPlay);
+      events.forEach((evt) => video.removeEventListener(evt, tryPlay));
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pageshow", tryPlay);
       window.removeEventListener("focus", tryPlay);
+      window.clearInterval(interval);
     };
   }, [activeSrc]);
 
@@ -89,6 +102,7 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
         playsInline
         webkit-playsinline="true"
         disableRemotePlayback
+        disablePictureInPicture
         controls={false}
         preload="auto"
       >
