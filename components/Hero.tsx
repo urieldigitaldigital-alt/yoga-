@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { HeroVideo } from "@/components/ui/HeroVideo";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { hero } from "@/lib/content";
 
 const ease = [0.22, 0.61, 0.36, 1] as const;
@@ -14,12 +14,7 @@ export function Hero() {
       className="relative flex min-h-[100svh] w-full items-end bg-espresso"
     >
       <div className="absolute inset-0 h-full w-full overflow-hidden">
-        <HeroVideo
-          src={hero.media.src}
-          mobileSrc={hero.media.mobileSrc}
-          poster={hero.media.poster}
-          label={hero.media.label}
-        />
+        <HeroMedia src={hero.media.src} mobileSrc={hero.media.mobileSrc} label={hero.media.label} />
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/20 to-espresso/35" />

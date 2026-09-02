@@ -68,11 +68,12 @@ export const hero = {
   ctaPrimary: { label: "Descubrir experiencias", href: "#retiros" },
   ctaSecondary: { label: "Ver el lugar", href: "#lugar" },
   media: {
-    kind: "video" as const,
-    src: "/media/hero.mp4",
-    mobileSrc: "/media/hero-mobile.mp4",
-    poster: "",
-    label: "Video real: práctica de yoga o instante de un retiro, tomado con luz natural",
+    // Imagen animada (WebP), no video: así se reproduce siempre sola, en
+    // cualquier plataforma, sin depender de políticas de autoplay del
+    // navegador (por ejemplo, "Reducir movimiento" activado en iOS).
+    src: "/media/hero.webp",
+    mobileSrc: "/media/hero-mobile.webp",
+    label: "Práctica de yoga o instante de un retiro, tomado con luz natural",
   },
 };
 
