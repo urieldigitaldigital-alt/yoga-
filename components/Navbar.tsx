@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav, site } from "@/lib/content";
@@ -52,8 +53,16 @@ export function Navbar() {
 
         <Link
           href="#inicio"
-          className={`justify-self-center font-serif-display italic text-2xl tracking-tight transition-colors duration-700 ${linkColor}`}
+          className={`flex items-center justify-self-center gap-2.5 font-serif-display italic text-2xl tracking-tight transition-colors duration-700 ${linkColor}`}
         >
+          <Image
+            src="/logo.png"
+            alt=""
+            width={44}
+            height={44}
+            priority
+            className="h-9 w-9 object-contain drop-shadow-sm sm:h-10 sm:w-10"
+          />
           {site.brandName}
         </Link>
 
