@@ -1,15 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Reveal } from "@/components/ui/Reveal";
-import { VideoCarousel } from "@/components/ui/VideoCarousel";
-import {
-  WHATSAPP_JOIN_MESSAGE,
-  instagramHref,
-  place,
-  placeVideos,
-  site,
-  whatsappHref,
-} from "@/lib/content";
+import { WHATSAPP_JOIN_MESSAGE, instagramHref, place, whatsappHref } from "@/lib/content";
 
 function PinIcon() {
   return (
@@ -63,30 +56,34 @@ export function Place() {
           <h2 className="mt-4 text-balance font-serif-display text-3xl leading-tight text-ink sm:text-4xl">
             {place.title}
           </h2>
-          <p className="mt-4 max-w-lg font-sans-ui text-sm font-light leading-relaxed text-ink/65">
-            {place.body}
-          </p>
+          {place.body && (
+            <p className="mt-4 max-w-lg font-sans-ui text-sm font-light leading-relaxed text-ink/65">
+              {place.body}
+            </p>
+          )}
         </Reveal>
 
-        {/* Sin <Reveal>: un ancestro con transform (como los componentes
-            animados) rompe el position:sticky que usa el carrusel. */}
-        <div className="mt-14">
-          <VideoCarousel items={placeVideos} />
-        </div>
-
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <Reveal delay={0.15}>
+            <MediaFrame
+              kind="video"
+              label="Video real: el espacio del instituto"
+              className="aspect-[4/3] w-full"
+            />
+          </Reveal>
           <Reveal delay={0.15}>
             <LocationMap mapQuery={place.mapQuery} />
           </Reveal>
 
-          <Reveal delay={0.2} className="flex flex-col justify-center gap-6">
+          <Reveal
+            delay={0.2}
+            className="flex flex-col justify-center gap-6 lg:col-span-2 lg:flex-row lg:items-center lg:justify-between"
+          >
             <div>
               <span className="font-sans-ui text-[0.65rem] font-medium uppercase tracking-[0.15em] text-stone-dark">
                 Ubicación
               </span>
-              <p className="mt-1 font-serif-display text-lg text-ink">
-                {place.address || site.city}
-              </p>
+              <p className="mt-1 font-serif-display text-lg text-ink">{place.address}</p>
               <p className="mt-3 max-w-sm font-sans-ui text-sm font-light leading-relaxed text-ink/65">
                 Te esperamos para que conozcas el espacio en persona.
               </p>

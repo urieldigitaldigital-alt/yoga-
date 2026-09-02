@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { InstagramIcon, PinIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { contact, instagramHref, place, site, whatsappHref } from "@/lib/content";
+import { contact, instagramHref, place, whatsappHref } from "@/lib/content";
 
 export function Contact() {
   const wa = whatsappHref("Hola, quiero saber más sobre las próximas actividades.");
@@ -23,7 +23,7 @@ export function Contact() {
     },
     {
       label: "Ubicación",
-      description: place.address || site.city,
+      description: place.address,
       icon: PinIcon,
       href: place.mapsUrl || undefined,
     },

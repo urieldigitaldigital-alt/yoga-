@@ -37,9 +37,11 @@ export function Yoga() {
               <div className="mt-6 flex items-start justify-between gap-6 border-b border-ink/10 pb-6">
                 <div>
                   <h3 className="font-serif-display text-xl text-ink">{style.name}</h3>
-                  <p className="mt-2 max-w-[42ch] font-sans-ui text-sm font-light leading-relaxed text-ink/65">
-                    {style.description}
-                  </p>
+                  {style.description && (
+                    <p className="mt-2 max-w-[42ch] font-sans-ui text-sm font-light leading-relaxed text-ink/65">
+                      {style.description}
+                    </p>
+                  )}
                 </div>
                 <Button href={cta} variant="line" className="mt-2 shrink-0" external={external}>
                   Conocer más

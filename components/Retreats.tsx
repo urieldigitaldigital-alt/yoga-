@@ -4,7 +4,8 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Parallax } from "@/components/ui/Parallax";
 import { Reveal } from "@/components/ui/Reveal";
-import { WHATSAPP_JOIN_MESSAGE, retreats, whatsappHref } from "@/lib/content";
+import { VideoCarousel } from "@/components/ui/VideoCarousel";
+import { WHATSAPP_JOIN_MESSAGE, retreatVideos, retreats, whatsappHref } from "@/lib/content";
 
 export function Retreats() {
   const cta = whatsappHref(WHATSAPP_JOIN_MESSAGE) ?? retreats.cta.href;
@@ -43,6 +44,17 @@ export function Retreats() {
             </Button>
           </div>
         </Reveal>
+
+        <Reveal className="mt-8">
+          <p className="font-sans-ui text-[0.65rem] font-medium uppercase tracking-[0.15em] text-stone-dark">
+            Momentos de nuestros retiros
+          </p>
+        </Reveal>
+        {/* Sin <Reveal>: un ancestro con transform (como los componentes
+            animados) rompe el position:sticky que usa el carrusel. */}
+        <div className="mt-6">
+          <VideoCarousel items={retreatVideos} />
+        </div>
       </div>
     </section>
   );

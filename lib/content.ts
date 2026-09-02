@@ -2,12 +2,11 @@
 // CONTENIDO EDITABLE DEL SITIO
 // ---------------------------------------------------------------------------
 // Este es el único archivo que hace falta tocar para actualizar textos,
-// fotos, fechas, retiros, talleres, testimonios, WhatsApp e Instagram.
-// Todo lo marcado como [COMPLETAR] es información real que todavía no
-// fue provista y no debe reemplazarse por datos inventados.
+// fotos, fechas, retiros, talleres, WhatsApp e Instagram. Los campos de
+// texto que todavía no tienen dato real quedan como string vacío ("") en
+// vez de un placeholder inventado; los componentes los ocultan cuando
+// están vacíos.
 // ---------------------------------------------------------------------------
-
-export const PLACEHOLDER = "[COMPLETAR]";
 
 export const site = {
   brandName: "Sol Naciente",
@@ -15,8 +14,6 @@ export const site = {
   eyebrow: "YOGA · BIENESTAR · EXPERIENCIAS",
   metaDescription:
     "Yoga, retiros holísticos, talleres y formaciones para acompañar tu camino de bienestar, dentro y fuera del país.",
-  email: PLACEHOLDER,
-  city: "[CIUDAD, PROVINCIA]",
 };
 
 // Dejar vacío hasta tener el dato real. Formato: código de país + área + número, sin "+".
@@ -97,25 +94,25 @@ export const yogaStyles = [
   {
     id: "01",
     name: "Estilo de yoga 01",
-    description: PLACEHOLDER,
+    description: "",
     media: { src: "/media/yoga/estilo-01.jpg", label: "Foto real: estilo de yoga 01" },
   },
   {
     id: "02",
     name: "Estilo de yoga 02",
-    description: PLACEHOLDER,
+    description: "",
     media: { src: "/media/yoga/estilo-02.jpg", label: "Foto real: estilo de yoga 02" },
   },
   {
     id: "03",
     name: "Estilo de yoga 03",
-    description: PLACEHOLDER,
+    description: "",
     media: { src: "/media/yoga/estilo-03.jpg", label: "Foto real: estilo de yoga 03" },
   },
   {
     id: "04",
     name: "Estilo de yoga 04",
-    description: PLACEHOLDER,
+    description: "",
     media: { src: "/media/yoga/estilo-04.jpg", label: "Foto real: estilo de yoga 04" },
   },
 ];
@@ -161,25 +158,26 @@ export const aboutMe = {
 export const place = {
   eyebrow: "EL LUGAR",
   title: "Un espacio pensado para respirar.",
-  body: "[CONTENIDO REAL PENDIENTE: describir el espacio físico, la ambientación y qué lo hace especial.]",
+  body: "",
   address: "Instituto Sol Naciente",
   mapQuery: "-27.369286,-55.922581",
   mapsUrl: "https://maps.google.com/?q=-27.369286,-55.922581",
   cta: { label: "Cómo llegar", href: "https://maps.google.com/?q=-27.369286,-55.922581" },
 };
 
-// Carrusel de videos del lugar. Completar "src" con la ruta real
-// (ej: "/media/lugar/lugar-01.mp4") a medida que se agreguen los clips.
-export const placeVideos = [
-  { src: "/media/lugar/lugar-01.mp4", label: "Video real: el lugar 01" },
-  { src: "/media/lugar/lugar-02.mp4", label: "Video real: el lugar 02" },
-  { src: "/media/lugar/lugar-03.mp4", label: "Video real: el lugar 03" },
-  { src: "/media/lugar/lugar-04.mp4", label: "Video real: el lugar 04" },
-  { src: "/media/lugar/lugar-05.mp4", label: "Video real: el lugar 05" },
-  { src: "/media/lugar/lugar-06.mp4", label: "Video real: el lugar 06" },
-  { src: "/media/lugar/lugar-07.mp4", label: "Video real: el lugar 07" },
-  { src: "/media/lugar/lugar-08.mp4", label: "Video real: el lugar 08" },
-  { src: "/media/lugar/lugar-09.mp4", label: "Video real: el lugar 09" },
+// Carrusel de momentos de retiro: estos clips son de un restaurante y un
+// living con fogón durante un retiro (no del estudio en sí), por eso van
+// en Retiros y no en "El lugar".
+export const retreatVideos = [
+  { src: "/media/lugar/lugar-01.mp4", label: "Detalle floral durante un retiro" },
+  { src: "/media/lugar/lugar-02.mp4", label: "Jazmines en la mesa de un retiro" },
+  { src: "/media/lugar/lugar-03.mp4", label: "Ambientación de un retiro" },
+  { src: "/media/lugar/lugar-04.mp4", label: "Fogón de leña en un retiro" },
+  { src: "/media/lugar/lugar-05.mp4", label: "Salón donde se compartieron las comidas" },
+  { src: "/media/lugar/lugar-06.mp4", label: "Mesa servida durante un retiro" },
+  { src: "/media/lugar/lugar-07.mp4", label: "Momento junto al fuego en un retiro" },
+  { src: "/media/lugar/lugar-08.mp4", label: "Detalle de la mesa en un retiro I" },
+  { src: "/media/lugar/lugar-09.mp4", label: "Detalle de la mesa en un retiro II" },
 ];
 
 export const gallery = [
@@ -192,12 +190,6 @@ export const gallery = [
   { src: "/media/galeria/galeria-07.jpg", orientation: "portrait", label: "Flexión de espalda con bloque" },
   { src: "/media/galeria/galeria-08.jpg", orientation: "portrait", label: "Clase grupal, postura del guerrero" },
 ] as const;
-
-export const testimonials = [
-  { quote: "[TESTIMONIO REAL DEL CLIENTE]", name: "[NOMBRE]" },
-  { quote: "[TESTIMONIO REAL DEL CLIENTE]", name: "[NOMBRE]" },
-  { quote: "[TESTIMONIO REAL DEL CLIENTE]", name: "[NOMBRE]" },
-];
 
 export const closing = {
   title: "Tu próximo espacio de bienestar puede empezar acá.",
