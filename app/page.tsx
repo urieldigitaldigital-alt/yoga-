@@ -9,7 +9,6 @@ import { AboutMe } from "@/components/AboutMe";
 import { Place } from "@/components/Place";
 import { Gallery } from "@/components/Gallery";
 import { Testimonials } from "@/components/Testimonials";
-import { Social } from "@/components/Social";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/ui/WhatsAppFab";
@@ -29,7 +28,6 @@ export default function Home() {
         <Place />
         <Gallery />
         <Testimonials />
-        <Social />
         <Contact />
       </main>
       <Footer />

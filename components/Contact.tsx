@@ -1,15 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import {
-  INSTAGRAM_USERNAME,
-  WHATSAPP_NUMBER,
-  contact,
-  instagramHref,
-  place,
-  site,
-  whatsappHref,
-} from "@/lib/content";
+import { InstagramIcon, PinIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { contact, instagramHref, place, site, whatsappHref } from "@/lib/content";
 
 export function Contact() {
   const wa = whatsappHref("Hola, quiero saber más sobre las próximas actividades.");
@@ -18,25 +11,23 @@ export function Contact() {
   const items = [
     {
       label: "WhatsApp",
-      value: WHATSAPP_NUMBER ? `+${WHATSAPP_NUMBER}` : "[COMPLETAR]",
+      description: "Escribinos y te respondemos a la brevedad.",
+      icon: WhatsAppIcon,
       href: wa,
     },
     {
       label: "Instagram",
-      value: INSTAGRAM_USERNAME ? `@${INSTAGRAM_USERNAME}` : "[COMPLETAR]",
+      description: "Seguí las novedades y clases del instituto.",
+      icon: InstagramIcon,
       href: ig,
     },
     {
-      label: "Email",
-      value: site.email,
-      href: site.email && site.email !== "[COMPLETAR]" ? `mailto:${site.email}` : undefined,
-    },
-    {
       label: "Ubicación",
-      value: place.address || site.city,
+      description: place.address || site.city,
+      icon: PinIcon,
       href: place.mapsUrl || undefined,
     },
-  ];
+  ].filter((item) => item.href);
 
   return (
     <section id="contacto" className="bg-sand/40 py-24 sm:py-32">
@@ -51,24 +42,23 @@ export function Contact() {
           </p>
         </Reveal>
 
-        <RevealGroup className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4">
-          {items.map((item) => (
-            <RevealItem key={item.label} className="flex flex-col items-center gap-2">
-              <span className="font-sans-ui text-[0.65rem] font-medium uppercase tracking-[0.2em] text-stone-dark">
-                {item.label}
-              </span>
-              {item.href ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-serif-display text-base text-ink transition-colors hover:text-terracotta-deep"
-                >
-                  {item.value}
-                </a>
-              ) : (
-                <span className="font-serif-display text-base text-ink/70">{item.value}</span>
-              )}
+        <RevealGroup className="mx-auto mt-14 grid max-w-3xl gap-6 sm:grid-cols-3">
+          {items.map(({ label, description, icon: Icon, href }) => (
+            <RevealItem key={label}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col items-center gap-3 rounded-2xl bg-ivory px-6 py-8 text-center shadow-card transition-transform duration-300 ease-out hover:-translate-y-1"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-espresso text-ivory transition-colors duration-300 group-hover:bg-terracotta-deep">
+                  <Icon className="h-6 w-6" />
+                </span>
+                <span className="font-serif-display text-lg text-ink">{label}</span>
+                <span className="font-sans-ui text-sm font-light leading-relaxed text-ink/65">
+                  {description}
+                </span>
+              </a>
             </RevealItem>
           ))}
         </RevealGroup>
