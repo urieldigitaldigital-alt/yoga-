@@ -13,25 +13,25 @@ type HeroVideoProps = {
 const MOBILE_QUERY = "(max-width: 767px)";
 
 export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
-  const [viewport, setViewport] = useState<{ mounted: boolean; isMobile: boolean }>({
-    mounted: false,
-    isMobile: false,
-  });
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Arranca directo con el video de escritorio (sin gate de "montado"): así el
+  // primer HTML que ve cualquier visitante ya es el video real, nunca un
+  // placeholder con ícono de play.
+  const [activeSrc, setActiveSrc] = useState(src ?? mobileSrc);
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_QUERY);
-    const update = () => setViewport({ mounted: true, isMobile: mq.matches });
+    const update = () => {
+      setActiveSrc(mq.matches && mobileSrc ? mobileSrc : (src ?? mobileSrc));
+    };
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
-  }, []);
+  }, [src, mobileSrc]);
 
-  const { mounted, isMobile } = viewport;
-  const activeSrc = isMobile && mobileSrc ? mobileSrc : src;
-
-  // iOS Safari a veces pausa el video de fondo (al volver de otra app, al
-  // recuperar memoria, etc). Lo retomamos apenas la página vuelve a estar visible.
+  // Algunos navegadores (sobre todo iOS Safari) pueden pausar el video de
+  // fondo al volver de otra app o por presión de memoria. Lo retomamos apenas
+  // la página vuelve a estar visible, sin que el usuario tenga que tocar nada.
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !activeSrc) return;
@@ -47,19 +47,21 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
 
     tryPlay();
     video.addEventListener("pause", tryPlay);
+    video.addEventListener("loadedmetadata", tryPlay);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pageshow", tryPlay);
     window.addEventListener("focus", tryPlay);
 
     return () => {
       video.removeEventListener("pause", tryPlay);
+      video.removeEventListener("loadedmetadata", tryPlay);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pageshow", tryPlay);
       window.removeEventListener("focus", tryPlay);
     };
   }, [activeSrc]);
 
-  if (!mounted || !activeSrc) {
+  if (!activeSrc) {
     return (
       <MediaFrame
         kind="video"
@@ -77,6 +79,7 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
     <div className="relative h-full w-full overflow-hidden bg-espresso">
       <video
         ref={videoRef}
+        key={activeSrc}
         className="absolute inset-0 h-full w-full object-cover"
         src={activeSrc}
         poster={poster || undefined}
@@ -86,6 +89,7 @@ export function HeroVideo({ src, mobileSrc, poster, label }: HeroVideoProps) {
         playsInline
         webkit-playsinline="true"
         disableRemotePlayback
+        controls={false}
         preload="auto"
       >
         <track kind="captions" />
