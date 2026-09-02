@@ -5,8 +5,6 @@ import { gallery } from "@/lib/content";
 
 const ASPECT: Record<(typeof gallery)[number]["orientation"], string> = {
   portrait: "aspect-[3/4]",
-  landscape: "aspect-[3/2]",
-  square: "aspect-square",
 };
 
 export function Gallery() {

@@ -183,14 +183,14 @@ export const placeVideos = [
 ];
 
 export const gallery = [
-  { src: "", orientation: "portrait", label: "Clase de yoga, luz natural" },
-  { src: "", orientation: "landscape", label: "Paisaje de un retiro" },
-  { src: "", orientation: "square", label: "Manos, ceremonia" },
-  { src: "", orientation: "landscape", label: "Grupo en movimiento" },
-  { src: "", orientation: "portrait", label: "Espacio del estudio" },
-  { src: "", orientation: "square", label: "Detalle, textura natural" },
-  { src: "", orientation: "portrait", label: "Momento cotidiano de un taller" },
-  { src: "", orientation: "landscape", label: "Naturaleza, entorno de retiro" },
+  { src: "/media/galeria/galeria-01.jpg", orientation: "portrait", label: "Postura invertida en el estudio" },
+  { src: "/media/galeria/galeria-02.jpg", orientation: "portrait", label: "Práctica en pareja, apertura de espalda" },
+  { src: "/media/galeria/galeria-03.jpg", orientation: "portrait", label: "Estiramiento con banda elástica" },
+  { src: "/media/galeria/galeria-04.jpg", orientation: "portrait", label: "Equilibrio invertido contra la pared" },
+  { src: "/media/galeria/galeria-05.jpg", orientation: "portrait", label: "Práctica de equilibrio en clase grupal" },
+  { src: "/media/galeria/galeria-06.jpg", orientation: "portrait", label: "Postura de torsión, vista cenital" },
+  { src: "/media/galeria/galeria-07.jpg", orientation: "portrait", label: "Flexión de espalda con bloque" },
+  { src: "/media/galeria/galeria-08.jpg", orientation: "portrait", label: "Clase grupal, postura del guerrero" },
 ] as const;
 
 export const testimonials = [
