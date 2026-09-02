@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MediaFrame } from "@/components/ui/MediaFrame";
@@ -20,6 +21,15 @@ export function AboutMe() {
               index={1}
               elevated
               className="h-full w-full"
+              placeholderIcon={
+                <Image
+                  src="/logo.png"
+                  alt="Sol Naciente"
+                  width={200}
+                  height={200}
+                  className="h-28 w-28 object-contain opacity-90 sm:h-36 sm:w-36"
+                />
+              }
             />
           </Parallax>
         </Reveal>

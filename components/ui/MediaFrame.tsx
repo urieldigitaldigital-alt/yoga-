@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 type MediaFrameProps = {
   src?: string;
@@ -13,6 +14,7 @@ type MediaFrameProps = {
   rounded?: boolean;
   minimal?: boolean;
   elevated?: boolean;
+  placeholderIcon?: ReactNode;
 };
 
 const TONES = [
@@ -70,6 +72,7 @@ export function MediaFrame({
   rounded = true,
   minimal = false,
   elevated = false,
+  placeholderIcon,
 }: MediaFrameProps) {
   const tone = TONES[index % TONES.length];
   const roundedClass = rounded ? "rounded-2xl" : "";
@@ -110,7 +113,7 @@ export function MediaFrame({
         <>
           <div className="absolute inset-2.5 rounded-xl border border-espresso/15" />
           <div className="absolute inset-0 flex items-center justify-center text-espresso">
-            {kind === "video" ? <PlayMark /> : <CameraMark />}
+            {placeholderIcon ?? (kind === "video" ? <PlayMark /> : <CameraMark />)}
           </div>
         </>
       )}

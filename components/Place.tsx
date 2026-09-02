@@ -2,7 +2,14 @@ import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { VideoCarousel } from "@/components/ui/VideoCarousel";
-import { place, placeVideos, site } from "@/lib/content";
+import {
+  WHATSAPP_JOIN_MESSAGE,
+  instagramHref,
+  place,
+  placeVideos,
+  site,
+  whatsappHref,
+} from "@/lib/content";
 
 function PinIcon() {
   return (
@@ -45,6 +52,9 @@ function LocationMap({ mapQuery }: { mapQuery: string }) {
 }
 
 export function Place() {
+  const wa = whatsappHref(WHATSAPP_JOIN_MESSAGE);
+  const ig = instagramHref;
+
   return (
     <section id="lugar" className="bg-sand/40 py-24 sm:py-32">
       <div className="container-editorial">
@@ -75,10 +85,21 @@ export function Place() {
               <p className="mt-1 font-serif-display text-lg text-ink">
                 {place.address || site.city}
               </p>
+              <p className="mt-3 max-w-sm font-sans-ui text-sm font-light leading-relaxed text-ink/65">
+                Te esperamos para que conozcas el espacio en persona.
+              </p>
             </div>
-            <Button href={place.cta.href} variant="outline" className="w-fit" external>
-              {place.cta.label}
-            </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button href={place.cta.href} variant="outline" external>
+                {place.cta.label}
+              </Button>
+              <Button href={wa ?? "#contacto"} variant="outline" external={Boolean(wa)}>
+                Escribinos por WhatsApp
+              </Button>
+              <Button href={ig ?? "#contacto"} variant="outline" external={Boolean(ig)}>
+                Seguinos en Instagram
+              </Button>
+            </div>
           </Reveal>
         </div>
       </div>

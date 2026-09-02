@@ -79,19 +79,22 @@ export function VideoCarousel({ items }: { items: CarouselItem[] }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [distance, setDistance] = useState(0);
+  const [dims, setDims] = useState({ distance: 0, viewportHeight: 0 });
 
   useEffect(() => {
     const update = () => {
       if (!trackRef.current || !viewportRef.current) return;
       const trackWidth = trackRef.current.scrollWidth;
       const viewportWidth = viewportRef.current.offsetWidth;
-      setDistance(Math.max(0, trackWidth - viewportWidth));
+      const viewportHeight = viewportRef.current.offsetHeight;
+      setDims({ distance: Math.max(0, trackWidth - viewportWidth), viewportHeight });
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, [items.length]);
+
+  const { distance, viewportHeight } = dims;
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
@@ -103,7 +106,7 @@ export function VideoCarousel({ items }: { items: CarouselItem[] }) {
   return (
     <div
       ref={wrapperRef}
-      style={{ height: `${420 + distance * SPEED}px` }}
+      style={{ height: `${viewportHeight + distance * SPEED}px` }}
       className="relative"
     >
       <div
