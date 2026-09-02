@@ -81,17 +81,37 @@ export function VideoCarousel({ items }: { items: CarouselItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [dims, setDims] = useState({ distance: 0, viewportHeight: 0 });
 
+  // Medimos con ResizeObserver (no una sola vez al montar): así se
+  // recalcula solo ante cualquier cambio real de tamaño del track o del
+  // viewport (fuentes que terminan de cargar, video que define su tamaño,
+  // resize de ventana, etc.), sin depender de que todo esté listo en el
+  // instante exacto del primer render.
   useEffect(() => {
+    const track = trackRef.current;
+    const viewport = viewportRef.current;
+    if (!track || !viewport) return;
+
     const update = () => {
-      if (!trackRef.current || !viewportRef.current) return;
-      const trackWidth = trackRef.current.scrollWidth;
-      const viewportWidth = viewportRef.current.offsetWidth;
-      const viewportHeight = viewportRef.current.offsetHeight;
-      setDims({ distance: Math.max(0, trackWidth - viewportWidth), viewportHeight });
+      const trackWidth = track.scrollWidth;
+      const viewportWidth = viewport.offsetWidth;
+      const viewportHeight = viewport.offsetHeight;
+      setDims((prev) => {
+        const distance = Math.max(0, trackWidth - viewportWidth);
+        if (prev.distance === distance && prev.viewportHeight === viewportHeight) return prev;
+        return { distance, viewportHeight };
+      });
     };
+
     update();
+    const ro = new ResizeObserver(update);
+    ro.observe(track);
+    ro.observe(viewport);
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
   }, [items.length]);
 
   const { distance, viewportHeight } = dims;
@@ -103,17 +123,19 @@ export function VideoCarousel({ items }: { items: CarouselItem[] }) {
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
 
+  const ready = distance > 0 && viewportHeight > 0;
+
   return (
     <div
       ref={wrapperRef}
-      style={{ height: `${viewportHeight + distance * SPEED}px` }}
+      style={ready ? { height: `${viewportHeight + distance * SPEED}px` } : undefined}
       className="relative"
     >
       <div
         ref={viewportRef}
         className="sticky top-24 flex h-[380px] items-center overflow-hidden sm:h-[420px]"
       >
-        <motion.div ref={trackRef} className="flex h-full gap-5" style={{ x }}>
+        <motion.div ref={trackRef} className="flex h-full gap-5" style={{ x: ready ? x : 0 }}>
           {items.map((item, i) => (
             <VideoCard key={item.label} item={item} index={i} />
           ))}

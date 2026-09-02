@@ -68,9 +68,11 @@ export function Place() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.1} className="mt-14">
+        {/* Sin <Reveal>: un ancestro con transform (como los componentes
+            animados) rompe el position:sticky que usa el carrusel. */}
+        <div className="mt-14">
           <VideoCarousel items={placeVideos} />
-        </Reveal>
+        </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
           <Reveal delay={0.15}>

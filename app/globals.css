@@ -35,15 +35,18 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    overflow-x: hidden;
   }
 
+  /* Ojo: NO poner overflow-x: hidden acá. Por regla de CSS, eso fuerza a
+     que overflow-y pase a "auto" en el mismo elemento, y convertir a
+     html/body en su propio contenedor de scroll rompe position:sticky
+     (y el tracking de scroll de framer-motion) en todo el sitio. Si
+     aparece scroll horizontal, hay que arreglar el elemento puntual que
+     desborda, no bloquearlo acá arriba. */
   body {
     @apply bg-ivory text-ink antialiased;
     font-family: var(--font-sans);
     font-weight: 300;
-    overflow-x: hidden;
-    max-width: 100vw;
   }
 
   ::selection {
