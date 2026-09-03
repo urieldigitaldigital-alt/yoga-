@@ -142,6 +142,53 @@ export const workshops = {
   ],
 };
 
+export const faq = {
+  eyebrow: "PREGUNTAS FRECUENTES",
+  title: "Antes de anotarte, resolvamos tus dudas.",
+  items: [
+    {
+      question: "¿Qué es el Profesorado de Yoga Terapéutico?",
+      answer:
+        "Es la formación para quienes quieren usar el yoga como herramienta de acompañamiento en procesos de dolor, lesión o rehabilitación: aprendés a adaptar la práctica a cada cuerpo y cada historia, en vez de enseñar una única secuencia para todos.",
+    },
+    {
+      question: "¿Qué es el Profesorado de Yoga Integral Deportivo?",
+      answer:
+        "Está pensado para quienes entrenan o acompañan a deportistas. Combina yoga con nociones de movimiento y recuperación física, para sumarlo como complemento del entrenamiento y la prevención de lesiones.",
+    },
+    {
+      question: "¿En qué se diferencia el Instructorado de un profesorado?",
+      answer:
+        "El Instructorado te da las bases para empezar a dar clases; los profesorados profundizan mucho más en cada especialidad y tienen aval nacional e internacional.",
+    },
+    {
+      question: "¿Y los talleres temáticos, de qué se tratan?",
+      answer:
+        "Son espacios puntuales para profundizar en una técnica específica —bioneuromoción, fascia, Tai Chi, meditación o Ayurveda— sin el compromiso de cursar un profesorado completo.",
+    },
+    {
+      question: "¿Para qué me sirve hacer una formación en Sol Naciente?",
+      answer:
+        "Depende de qué estés buscando: para dar tus propias clases, para profundizar tu práctica personal, para sumar una herramienta de trabajo si ya sos profe o entrenador, o para acompañar mejor a personas con dolores o lesiones puntuales.",
+    },
+    {
+      question: "¿Necesito experiencia previa en yoga para empezar?",
+      answer:
+        "No hace falta ser avanzado para arrancar. Escribinos por WhatsApp contándonos tu nivel y te orientamos sobre la formación que mejor te queda.",
+    },
+    {
+      question: "¿Es presencial u online?",
+      answer:
+        "Todas las formaciones tienen modalidad presencial y online, para que puedas cursar estés donde estés.",
+    },
+    {
+      question: "¿Qué validez tienen los títulos?",
+      answer:
+        "Están avaladas a nivel nacional e internacional, afiliadas a una federación internacional de bienestar holístico.",
+    },
+  ],
+};
+
 export const aboutMe = {
   eyebrow: "SOBRE MÍ",
   greeting: `Hola, soy ${site.instructorName}.`,

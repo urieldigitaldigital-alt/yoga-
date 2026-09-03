@@ -5,6 +5,7 @@ import { Yoga } from "@/components/Yoga";
 import { About } from "@/components/About";
 import { Retreats } from "@/components/Retreats";
 import { Workshops } from "@/components/Workshops";
+import { FAQ } from "@/components/FAQ";
 import { AboutMe } from "@/components/AboutMe";
 import { Place } from "@/components/Place";
 import { Gallery } from "@/components/Gallery";
@@ -23,6 +24,7 @@ export default function Home() {
         <About />
         <Retreats />
         <Workshops />
+        <FAQ />
         <AboutMe />
         <Place />
         <Gallery />
