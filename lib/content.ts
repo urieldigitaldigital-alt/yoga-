@@ -10,7 +10,7 @@
 
 export const site = {
   brandName: "Sol Naciente",
-  instructorName: "Alejandra Lorena Barnette",
+  instructorName: "Alejandra Lorena Barnet",
   eyebrow: "YOGA · BIENESTAR · EXPERIENCIAS",
   metaDescription:
     "Yoga, retiros holísticos, talleres y formaciones para acompañar tu camino de bienestar, dentro y fuera del país.",
