@@ -206,6 +206,7 @@ export const place = {
   eyebrow: "EL LUGAR",
   title: "Un espacio pensado para respirar.",
   body: "",
+  media: { src: "/media/lugar/instituto.mp4", label: "Video real: el espacio del instituto" },
   address: "Instituto Sol Naciente",
   mapQuery: "-27.369286,-55.922581",
   mapsUrl: "https://maps.google.com/?q=-27.369286,-55.922581",

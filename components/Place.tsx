@@ -63,12 +63,13 @@ export function Place() {
           )}
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
           <Reveal delay={0.15}>
             <MediaFrame
               kind="video"
-              label="Video real: el espacio del instituto"
-              className="aspect-[4/3] w-full"
+              src={place.media.src}
+              label={place.media.label}
+              className="aspect-[3/4] w-full"
             />
           </Reveal>
           <Reveal delay={0.15}>
